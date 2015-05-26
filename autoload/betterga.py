@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-import sys
+import platform
 import unicodedata
+import sys
 
 
-if sys.version_info.major == 3:
+major, minor, patchlevel = map(int, platform.python_version_tuple())
+if major == 3:
     def unicode(s, encoding):
         return s
 
@@ -27,8 +29,8 @@ class CharInfo(object):
     @property
     def char(self):
         '''
-        >>> CharInfo('a').char
-        u'a'
+        >>> str(CharInfo('a').char)
+        'a'
         '''
         return self._char
 
@@ -70,21 +72,21 @@ class CharInfo(object):
         >>> CharInfo('a').oct
         '0141'
         '''
-        return oct(self.ord)
+        return oct(self.ord).replace('o', '')
 
     @property
     def nfc(self):
         '''
-        >>> CharInfo('a').nfc
-        u'a'
+        >>> str(CharInfo('a').nfc)
+        'a'
         '''
         return unicodedata.normalize('NFC', self.char)
 
     @property
     def nfd(self):
         '''
-        >>> CharInfo('a').nfc
-        u'a'
+        >>> str(CharInfo('a').nfc)
+        'a'
         '''
         return unicodedata.normalize('NFD', self.char)
 
