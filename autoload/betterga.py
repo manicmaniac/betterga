@@ -14,6 +14,15 @@ if major == 3:
 
 class CharInfo(object):
     def __init__(self, char):
+        '''
+        >>> CharInfo('a') #doctest: +ELLIPSIS
+        <betterga.CharInfo object at 0x...>
+
+        >>> CharInfo('spam')
+        Traceback (most recent call last):
+        ...
+        AssertionError
+        '''
         char = unicode(char, 'utf-8')
         assert len(char) == 1
         self._char = char
@@ -21,8 +30,8 @@ class CharInfo(object):
 
     def description(self, template):
         '''
-        template example:
-            '<{ci.char}> [{ci.name}] {ci.ord}, Hex {ci.hex}, Octal {ci.oct}'
+        >>> str(CharInfo('a').description('<{ci.char}> [{ci.name}] {ci.ord}, Hex {ci.hex}, Octal {ci.oct}'))
+        '<a> [LATIN SMALL LETTER A] 97, Hex 0x61, Octal 0141'
         '''
         return unicode(template, 'utf-8').format(ci=self)
 
