@@ -15,7 +15,7 @@ if major == 3:
 class CharInfo(object):
     def __init__(self, char):
         '''
-        >>> CharInfo('a') #doctest: +ELLIPSIS
+        >>> CharInfo('a') # doctest: +ELLIPSIS
         <betterga.CharInfo object at 0x...>
 
         >>> CharInfo('spam')
@@ -94,7 +94,7 @@ class CharInfo(object):
     @property
     def nfd(self):
         '''
-        >>> str(CharInfo('a').nfc)
+        >>> str(CharInfo('a').nfd)
         'a'
         '''
         return unicodedata.normalize('NFD', self.char)
