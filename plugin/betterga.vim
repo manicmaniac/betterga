@@ -1,5 +1,5 @@
 if exists('g:loaded_betterga')
-	finish
+    finish
 endif
 let g:loaded_betterga = 1
 

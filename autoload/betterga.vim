@@ -1,12 +1,12 @@
 if has('python3')
-	let s:python = 'python3'
-	let s:pyfile = 'py3file'
+    let s:python = 'python3'
+    let s:pyfile = 'py3file'
 elseif has('python')
-	let s:python = 'python'
-	let s:pyfile = 'pyfile'
+    let s:python = 'python'
+    let s:pyfile = 'pyfile'
 else
-	echoerr 'betterga requires python interface.'
-	finish
+    echoerr 'betterga requires python interface.'
+    finish
 endif
 
 let s:save_cpo = &cpo
@@ -20,15 +20,15 @@ let g:betterga_template = '<{ci.char}> [{ci.name}] {ci.ord}, Hex {ci.hex}, Octal
 execute s:pyfile s:plugin_path.'/betterga.py'
 
 function! s:current_char()
-	return matchstr(getline('.'), '.', col('.') - 1)
+    return matchstr(getline('.'), '.', col('.') - 1)
 endfunction
 
 function! betterga#describe(char)
-	execute s:python 'betterga(vim.eval("a:char"))'
+    execute s:python 'betterga(vim.eval("a:char"))'
 endfunction
 
 function! betterga#ascii()
-	call betterga#describe(s:current_char())
+    call betterga#describe(s:current_char())
 endfunction
 
 command! BetterAscii :call betterga#ascii()
