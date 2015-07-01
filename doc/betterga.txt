@@ -50,7 +50,7 @@ Use it just like old times.
 ------------------------------------------------------------------------------
 Commands                                                   *betterga-commands*
 
-Instead of old |:ascii|, privides a better command.
+Instead of old |:ascii|, provides a better command.
 
 	:BetterAscii
 
