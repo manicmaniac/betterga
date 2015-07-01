@@ -86,8 +86,6 @@ You can use a python script to examine character even outside of Vim.
 If "template" argument is not provided, the default template will be used.
 see |betterga-default-template| for more details.
 
-Note: python3 is unofficially supported.
-
 ==============================================================================
 Template syntax                                            *betterga-template*
 
