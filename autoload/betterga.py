@@ -6,24 +6,21 @@ import unicodedata
 import sys
 
 
-major, minor, patchlevel = map(int, platform.python_version_tuple())
-if major == 3:
-    def unicode(s, encoding):
-        return s
-
-
 class CharInfo(object):
     def __init__(self, char):
         '''
         >>> CharInfo('a') # doctest: +ELLIPSIS
-        <betterga.CharInfo object at 0x...>
+        <autoload.betterga.CharInfo object at 0x...>
 
         >>> CharInfo('spam')
         Traceback (most recent call last):
         ...
         AssertionError
         '''
-        char = unicode(char, 'utf-8')
+        try:
+            char = char.decode('utf-8')
+        except AttributeError as e:
+            pass
         assert len(char) == 1
         self._char = char
         self._ord = ord(self._char)
@@ -33,7 +30,11 @@ class CharInfo(object):
         >>> str(CharInfo('a').description('<{ci.char}> [{ci.name}] {ci.ord}, Hex {ci.hex}, Octal {ci.oct}'))
         '<a> [LATIN SMALL LETTER A] 97, Hex 0x61, Octal 0141'
         '''
-        return unicode(template, 'utf-8').format(ci=self)
+        try:
+            template = template.decode('utf-8')
+        except AttributeError as e:
+            pass
+        return template.format(ci=self)
 
     @property
     def char(self):
@@ -127,5 +128,5 @@ if __name__ == '__main__':
             print('Usage: python betterga.py char [template]')
             sys.exit(1)
 
-        print(CharInfo(char).description(template).encode('utf-8'))
+        print(CharInfo(char).description(template))
 
