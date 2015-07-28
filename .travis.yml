@@ -5,8 +5,14 @@ python:
     - 3.2
     - 3.3
     - 3.4
+before_install:
+    - sudo apt-get install vim-gtk
+before_script:
+    - export DISPLAY=:99.0
+    - sh -e /etc/init.d/xvfb start
 install:
-    pip install unittest2
+    - pip install -r tests/requirements.txt
 script:
-    - python -m unittest2.__main__ discover tests
+    - vim --version
+    - python -m unittest2.__main__ discover -v tests
 

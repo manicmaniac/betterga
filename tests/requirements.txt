@@ -1,0 +1,5 @@
+linecache2==1.0.0
+six==1.9.0
+traceback2==1.4.0
+unittest2==1.1.0
+vimrunner==1.0.3
