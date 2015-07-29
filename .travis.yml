@@ -14,5 +14,5 @@ install:
     - pip install -r tests/requirements.txt
 script:
     - vim --version
-    - python -m unittest2.__main__ discover -v tests
+    - python -m discover -v tests
 
