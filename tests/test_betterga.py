@@ -53,4 +53,3 @@ class TestBetterGA(unittest.TestCase):
             env=dict(os.environ, **env))
         out, err = process.communicate()
         return process.returncode, out, err
-

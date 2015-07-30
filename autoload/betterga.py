@@ -4,7 +4,7 @@
 
 class BetterGA(object):
     class CharInfo(object):
-        import unicodedata
+        import unicodedata # flake8: noqa
 
         def __init__(self, char):
             '''
@@ -18,7 +18,7 @@ class BetterGA(object):
             '''
             try:
                 char = char.decode('utf-8')
-            except AttributeError as e:
+            except AttributeError:
                 pass
             assert len(char) == 1
             self._char = char
@@ -26,12 +26,13 @@ class BetterGA(object):
 
         def description(self, template):
             '''
-            >>> str(BetterGA.CharInfo('a').description('<{ci.char}> [{ci.name}] {ci.ord}, Hex {ci.hex}, Octal {ci.oct}'))
+            >>> str(BetterGA.CharInfo('a').description(
+            ...     '<{ci.char}> [{ci.name}] {ci.ord}, Hex {ci.hex}, Octal {ci.oct}'))
             '<a> [LATIN SMALL LETTER A] 97, Hex 0x61, Octal 0141'
             '''
             try:
                 template = template.decode('utf-8')
-            except AttributeError as e:
+            except AttributeError:
                 pass
             return template.format(ci=self)
 
@@ -130,4 +131,3 @@ if __name__ == '__main__':
             sys.exit(1)
 
         print(BetterGA.CharInfo(char).description(template))
-

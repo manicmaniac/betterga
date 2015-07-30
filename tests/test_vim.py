@@ -6,7 +6,7 @@ import unittest
 import os
 import subprocess
 import vimrunner
-import sys
+
 
 class TestVim(unittest.TestCase):
     def setUp(self):
@@ -17,7 +17,7 @@ class TestVim(unittest.TestCase):
         self.server = vimrunner.Server(extra_args=['-N', '-i', 'NONE'])
         self.client = self.server.start()
         self.client.add_plugin(os.getcwd(), 'plugin/betterga.vim')
-        self.client.write_buffer("1", 'a')
+        self.client.write_buffer('1', 'a')
 
     def tearDown(self):
         self.server.quit()
@@ -61,9 +61,8 @@ class TestVim(unittest.TestCase):
         output, unused_err = process.communicate()
         retcode = process.poll()
         if retcode:
-            cmd = kwargs.get("args")
+            cmd = kwargs.get('args')
             if cmd is None:
                 cmd = popenargs[0]
             raise subprocess.CalledProcessError(retcode, cmd, output=output)
         return output
-
