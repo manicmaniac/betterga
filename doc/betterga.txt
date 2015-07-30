@@ -1,7 +1,7 @@
 *betterga.txt*    Yet another :ascii
 *betterga*
 
-Version: 0.2.0
+Version: 0.3.0
 Author : rito <rito.0305@gmail.com>
 License: MIT license
 
@@ -23,7 +23,7 @@ Introduction                                           *betterga-introduction*
 
 |betterga| can get more information than |ga| (|:ascii|).
 
-betterga depends on vim(>= 7.4) compiled with |python| (>= 2.4 or >= 3.0) interface.
+betterga depends on vim(>= 7.4) compiled with |python| (>= 2.6 or >= 3.2) interface.
 
 ==============================================================================
 Install                                                     *betterga-install*

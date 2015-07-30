@@ -1,0 +1,2 @@
+discover==0.4.0
+vimrunner==1.0.3
