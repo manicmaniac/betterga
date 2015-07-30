@@ -1,7 +1,7 @@
 *betterga.txt*    Yet another :ascii
 *betterga*
 
-Version: 0.2.0
+Version: 0.3.0
 Author : rito <rito.0305@gmail.com>
 License: MIT license
 
