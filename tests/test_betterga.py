@@ -38,6 +38,13 @@ class TestBetterGA(unittest.TestCase):
         self.assertEquals(ret, 0)
         self.assertEquals(out.decode(), 'a\n')
 
+    def testExposeOnlyOneNameToGlobalNamespace(self):
+        import autoload.betterga as betterga
+        import tests.fixtures.empty_module as empty_module
+        self.assertEqual(len(dir(betterga)), len(dir(empty_module)) + 1)
+        del betterga
+        del empty_module
+
     def betterga(self, *args, **env):
         args = [sys.executable, self.script_file_path] + list(args)
         process = subprocess.Popen(args,

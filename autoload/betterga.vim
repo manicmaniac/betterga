@@ -21,7 +21,7 @@ function! s:current_char()
 endfunction
 
 function! betterga#describe(char)
-    execute s:python 'betterga(vim.eval("a:char"))'
+    execute s:python 'BetterGA.betterga(vim.eval("a:char"))'
 endfunction
 
 function! betterga#ascii()
