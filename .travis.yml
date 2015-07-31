@@ -14,5 +14,5 @@ install:
     - pip install -r tests/requirements.txt
 script:
     - vim --version
-    - python -m discover -v tests
+    - python -m discover -v
 

@@ -15,7 +15,7 @@ class TestVim(unittest.TestCase):
         if not hasattr(subprocess, 'check_output'):
             subprocess.check_output = self.check_output
         self.server = vimrunner.Server(extra_args=['-N', '-i', 'NONE'])
-        self.client = self.server.start()
+        self.client = self.server.start_headless()
         self.client.add_plugin(os.getcwd(), 'plugin/betterga.vim')
         self.client.write_buffer('1', 'a')
 
