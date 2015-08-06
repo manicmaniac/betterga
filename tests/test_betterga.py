@@ -13,14 +13,14 @@ class TestBetterGA(unittest.TestCase):
 
     def testUsage(self):
         ret, out, err = self.betterga()
-        self.assertEquals(ret, 1)
-        self.assertEquals(out.decode(),
+        self.assertEqual(ret, 1)
+        self.assertEqual(out.decode(),
             'Usage: python betterga.py char [template]\n')
 
     def testDescription(self):
         ret, out, err = self.betterga('a')
-        self.assertEquals(ret, 0)
-        self.assertEquals(out.decode(),
+        self.assertEqual(ret, 0)
+        self.assertEqual(out.decode(),
             '<a> [LATIN SMALL LETTER A] 97, Hex 0x61, Octal 0141\n')
 
     def testDescriptionUnicodeCharacter(self):
@@ -29,14 +29,14 @@ class TestBetterGA(unittest.TestCase):
         else:
             encoding = sys.getfilesystemencoding()
         ret, out, err = self.betterga('\u86c7', PYTHONIOENCODING=encoding)
-        self.assertEquals(ret, 0)
-        self.assertEquals(out.decode(encoding),
+        self.assertEqual(ret, 0)
+        self.assertEqual(out.decode(encoding),
             '<\u86c7> [CJK UNIFIED IDEOGRAPH-86C7] 34503, Hex 0x86c7, Octal 0103307\n')
 
     def testDescriptionWithTemplate(self):
         ret, out, err = self.betterga('a', '{ci.char}')
-        self.assertEquals(ret, 0)
-        self.assertEquals(out.decode(), 'a\n')
+        self.assertEqual(ret, 0)
+        self.assertEqual(out.decode(), 'a\n')
 
     def testExposeOnlyOneNameToGlobalNamespace(self):
         import autoload.betterga as betterga
