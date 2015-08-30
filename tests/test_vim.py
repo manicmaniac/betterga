@@ -4,65 +4,44 @@
 from __future__ import unicode_literals
 import unittest
 import os
-import subprocess
-import vimrunner
+import headlessvim
 
 
 class TestVim(unittest.TestCase):
     def setUp(self):
-        self._lang = os.getenv('LANG', 'C')
-        os.environ['LANG'] = 'C'
-        if not hasattr(subprocess, 'check_output'):
-            subprocess.check_output = self.check_output
-        self.server = vimrunner.Server(extra_args=['-N', '-i', 'NONE'])
-        self.client = self.server.start_headless()
-        self.client.add_plugin(os.getcwd(), 'plugin/betterga.vim')
-        self.client.write_buffer('1', 'a')
+        env = dict(os.environ, LANG='C')
+        self.vim = headlessvim.open(env=env)
+        self.vim.install_plugin(os.getcwd(), 'plugin/betterga.vim')
+        self.vim.send_keys('ia\033')
 
     def tearDown(self):
-        self.server.quit()
-        if subprocess.check_output == self.check_output:
-            del subprocess.check_output
+        self.vim.close()
 
     def testVariableGLoadedBetterGA(self):
-        self.assertEqual(self.client.echo('exists("g:loaded_betterga")'), '1')
-        self.assertEqual(self.client.echo('g:loaded_betterga'), '1')
+        self.assertEqual(self.vim.echo('exists("g:loaded_betterga")'), '1')
+        self.assertEqual(self.vim.echo('g:loaded_betterga'), '1')
 
     def testVariableGBetterGATemplate(self):
-        self.assertEqual(self.client.echo('exists("g:betterga_template")'), '1')
-        self.assertEqual(self.client.echo('g:betterga_template'),
+        self.assertEqual(self.vim.echo('exists("g:betterga_template")'), '1')
+        self.assertEqual(self.vim.echo('g:betterga_template'),
             '<{ci.char}> [{ci.name}] {ci.ord}, Hex {ci.hex}, Octal {ci.oct}')
 
     def testVariableBBetterGATemplate(self):
-        self.client.command('let b:betterga_template = "{ci.char}"')
-        self.assertEqual(self.client.echo('exists("b:betterga_template")'), '1')
-        self.assertEqual(self.client.echo('b:betterga_template'), '{ci.char}')
-        self.assertEqual(self.client.echo('betterga#ascii()'), 'a\n0')
+        self.vim.command('let b:betterga_template = "{ci.char}"')
+        self.assertEqual(self.vim.echo('exists("b:betterga_template")'), '1')
+        self.assertEqual(self.vim.echo('b:betterga_template'), '{ci.char}')
+        self.assertEqual(self.vim.echo('betterga#ascii()'), 'a\n0')
 
     def testFunctionDescribe(self):
-        self.assertEqual(self.client.echo('betterga#describe("a")'),
+        self.assertEqual(self.vim.echo('betterga#describe("a")'),
             '<a> [LATIN SMALL LETTER A] 97, Hex 0x61, Octal 0141\n0')
 
     def testFunctionAscii(self):
-        self.assertEqual(self.client.echo('betterga#ascii()'),
+        self.assertEqual(self.vim.echo('betterga#ascii()'),
             '<a> [LATIN SMALL LETTER A] 97, Hex 0x61, Octal 0141\n0')
 
     def testCommandBetterAscii(self):
-        self.assertEqual(self.client.echo('exists(":BetterAscii")'), '2')
-        self.client.command('redir => g:result | BetterAscii | redir END')
-        self.assertEqual(self.client.echo('g:result'),
+        self.assertEqual(self.vim.echo('exists(":BetterAscii")'), '2')
+        self.vim.command('redir => g:result | BetterAscii | redir END')
+        self.assertEqual(self.vim.echo('g:result'),
             '<a> [LATIN SMALL LETTER A] 97, Hex 0x61, Octal 0141')
-
-    @staticmethod
-    def check_output(*popenargs, **kwargs):
-        if 'stdout' in kwargs:
-            raise ValueError('stdout argument not allowed, it will be overridden.')
-        process = subprocess.Popen(stdout=subprocess.PIPE, *popenargs, **kwargs)
-        output, unused_err = process.communicate()
-        retcode = process.poll()
-        if retcode:
-            cmd = kwargs.get('args')
-            if cmd is None:
-                cmd = popenargs[0]
-            raise subprocess.CalledProcessError(retcode, cmd, output=output)
-        return output
