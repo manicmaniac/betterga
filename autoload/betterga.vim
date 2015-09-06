@@ -16,17 +16,19 @@ let s:plugin_path = escape(expand('<sfile>:p:h'), '\')
 
 execute s:pyfile s:plugin_path.'/betterga.py'
 
-function! s:current_char()
+" vint: -ProhibitImplicitScopeVariable
+function! s:current_char() abort
     return matchstr(getline('.'), '.', col('.') - 1)
 endfunction
 
-function! betterga#describe(char)
+function! betterga#describe(char) abort
     execute s:python 'BetterGA.betterga(vim.eval("a:char"))'
 endfunction
 
-function! betterga#ascii()
+function! betterga#ascii() abort
     call betterga#describe(s:current_char())
 endfunction
+" vint: +ProhibitImplicitScopeVariable
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
